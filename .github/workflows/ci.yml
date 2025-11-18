@@ -28,4 +28,4 @@ jobs:
       # --exit-code-from app: if Pytest fails, the pipeline fails
       - name: Run Pytest with Docker Compose
         run: |
-          docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from app
+          docker compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from app
