@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  selenium-chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2g
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    environment:
+      - SE_VNC_NO_PASSWORD=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 2s
+      timeout: 1s
+      retries: 10
+
+  app:
+    build: .
+    command: ["pytest", "-v", "-s"]
+    depends_on:
+      selenium-chrome:
+        condition: service_healthy
+    volumes:
+      - .:/app
