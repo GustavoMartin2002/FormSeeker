@@ -11,15 +11,8 @@ EXCEL_FILE = "challenge.xlsx"
 
 def main():
     print("--- 🤖 Iniciando BOT ---")
-    print("Servidor Selenium (Chrome) está pronto.")
-    print("\n----------------------------------------------------")
-    print("A AUTOMAÇÃO COMEÇARÁ EM 10 SEGUNDOS.")
-    print("\nAbra o navegador Chrome AGORA, acesse http://localhost:7900 e conecte-se para assistir em tempo real!")
-    print("----------------------------------------------------\n")
 
-    time.sleep(10)
-
-    # 1. read data spreatsheet
+    # 1. read data spreadsheet
     spreadsheet_data = read_spreadsheet(file_path=EXCEL_FILE)
     if not spreadsheet_data:
         print("Erro na leitura da planilha...")
@@ -32,6 +25,23 @@ def main():
         print("Erro na inicialização do driver...")
         print("Encerrando bot.")
         return
+
+    # UX: loading
+    print("Pré-carregando o site para visualização...")
+    try:
+        driver.get("https://rpachallenge.com")
+    except Exception as error:
+        print(f"Aviso: Erro ao pré-carregar site: {error}")
+
+    print("\n----------------------------------------------------")
+    print("⚡ O NAVEGADOR JÁ ESTÁ ABERTO!")
+    print("A AUTOMAÇÃO COMEÇARÁ EM 10 SEGUNDOS...")
+    print("Acesse http://localhost:7900 AGORA.")
+    print("----------------------------------------------------\n")
+
+    for i in range(10, 0, -1):
+        print(f"Iniciando em {i} segundos...", flush=True)
+        time.sleep(1)
 
     # 3. exec challenger
     try:
@@ -56,7 +66,7 @@ def main():
         # 3.3 success
         print("\n--- ✅ SUCESSO! ---")
         print("Todas rodadas foram completadas.")
-        print("Exibindo resultados...")
+        print("Exibindo resultados por 10 segundos...")
         time.sleep(10)
     except Exception as error:
         print(f"ERRO INESPERADO durante a execução: {error}")
