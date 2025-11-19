@@ -6,7 +6,7 @@
 ![Selenium](https://img.shields.io/badge/Framework%20-Selenium-red)
 ![Pytest](https://img.shields.io/badge/Framework%20-Pytest-red)
 ![Pandas](https://img.shields.io/badge/Lib%20-Pandas-purple)
-![Openpyxl](https://img.shields.io/badge/Lib%20-openpyxl-purple)
+![Openpyxl](https://img.shields.io/badge/Lib%20-Openpyxl-purple)
 
 Esta solução é um **BOT** de automação (RPA) desenvolvido para resolver o [RPA Challenge](https://rpachallenge.com/). O objetivo é demonstrar proficiência na criação de automações robustos, estáveis e imunes a mudanças estruturais.
 
@@ -31,7 +31,7 @@ O projeto segue a arquitetura de Micro-serviços Light via Docker Compose para i
 - **Orquestração:** `docker-compose` inicia o Chrome e só depois do `healthcheck` inicia o container `app`.
 - **UX Delay:** O robô exibe uma contagem regressiva de 10s no terminal, dando tempo ao usuário para abrir o VNC `localhost:7900`.
 - **Leitura:** O `main.py` aciona a leitura da planilha (pandas).
-- **Automação:** O robô navega, clica em Start, e então entra no loop das 10 rodadas.
+- **Automação:** O BOT navega, clica em Start, e então entra no loop das 10 rodadas.
 
 #### Estratégia:
 A **abordagem** para lidar com os **elementos dinâmicos** foi a utilização de **Seletores Relativos baseados na vizinhança (Sibling XPath).**
@@ -75,7 +75,7 @@ cd FormSeeker
 - **1. Inicialização:**  <br>
 O Docker sobe o Chrome (Selenium) e o `app` (BOT), esperando a prontidão do servidor (healthcheck).
 ```
-  docker-compose up
+  docker-compose up --abort-on-container-exit
 ```
 
 - **2. Contagem:** <br>
@@ -86,6 +86,9 @@ Acesse: http://localhost:7900 para ver a tela do BOT.
 
 - **4. Execução:** <br>
 Após os 10 segundos, a automação começa a preencher as 10 rodadas.
+
+- **5. Encerramento** <br>
+O container vai ser parado pela flag `--abort-on-container-exit` inserida no primeiro passo.
 
 #### 4. 🧪 Como Rodar os Testes Automatizados
 Usa o arquivo de teste dedicado `docker-compose.test.yml` para validar se a lógica de localização de elementos (a estratégia Sibling XPath) e a conexão estão funcionando.
